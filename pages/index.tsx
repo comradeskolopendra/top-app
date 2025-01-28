@@ -1,21 +1,14 @@
-import { Noto_Sans } from "next/font/google";
-import Head from "next/head";
-
-const notoSans = Noto_Sans({
-  variable: "--font-noto-sans",
-  subsets: ["latin"],
-});
+import { Button, Htag } from "@/components/";
 
 export default function Home() {
   return (
     <>
-      <Head>
-        <title>test</title>
-        <link key={1} rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className={notoSans.className}>
-        12312312
-      </main>
+      <Htag tag="h1">Текст</Htag>
+      <Htag tag="h2">Текст</Htag>
+      <Htag tag="h3">Текст</Htag>
+
+      <Button appearance={"primary"}>Button</Button>
+      <Button appearance={"ghost"}>Button</Button>
     </>
   );
 }
