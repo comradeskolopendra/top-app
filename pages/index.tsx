@@ -7,8 +7,8 @@ export default function Home() {
       <Htag tag="h2">Текст</Htag>
       <Htag tag="h3">Текст</Htag>
 
-      <Button appearance={"primary"}>Button</Button>
-      <Button appearance={"ghost"}>Button</Button>
+      <Button appearance={"primary"} arrow="down">Button</Button>
+      <Button appearance={"ghost"} arrow="right">Button</Button>
     </>
   );
 }
