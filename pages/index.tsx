@@ -1,4 +1,4 @@
-import { Button, Htag } from "@/components/";
+import { Button, Htag, Paragraph } from "@/components/";
 
 export default function Home() {
   return (
@@ -9,6 +9,10 @@ export default function Home() {
 
       <Button appearance={"primary"} arrow="down">Button</Button>
       <Button appearance={"ghost"} arrow="right">Button</Button>
+
+      <Paragraph size="l">123</Paragraph>
+      <Paragraph>123</Paragraph>
+      <Paragraph size="s">123</Paragraph>
     </>
   );
 }
