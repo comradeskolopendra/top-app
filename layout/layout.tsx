@@ -4,18 +4,27 @@ import { Header } from "./header/header";
 import { LayoutProps } from "./layout.props";
 import { Sidebar } from "./sidebar/sidebar";
 
-export const Layout: FC<LayoutProps> = ({children}) => {
-
+const Layout: FC<LayoutProps> = ({ children }) => {
     return (
         <>
-            <Header/>
+            <Header />
             <div>
-                <Sidebar/>
+                <Sidebar />
                 <div>
                     {children}
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </>
     )
 };
+
+export const withLayout = <T extends Record<string, unknown>,>(Component: FC<T>) => {
+    return (props: T) => {
+        return (
+            <Layout>
+                <Component {...props} />
+            </Layout>
+        )
+    };
+}
