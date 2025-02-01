@@ -4,18 +4,18 @@ import { Header } from "./header/header";
 import { LayoutProps } from "./layout.props";
 import { Sidebar } from "./sidebar/sidebar";
 
+import styles from "./layout.module.css";
+
 const Layout: FC<LayoutProps> = ({ children }) => {
     return (
-        <>
-            <Header />
-            <div>
-                <Sidebar />
-                <div>
-                    {children}
-                </div>
+        <div className={styles.wrapper}>
+            <Header className={styles.header} />
+            <Sidebar className={styles.sidebar}  />
+            <div className={styles.body}>
+                {children}
             </div>
-            <Footer />
-        </>
+            <Footer className={styles.footer} />
+        </div>
     )
 };
 
