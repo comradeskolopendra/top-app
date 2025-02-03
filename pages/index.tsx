@@ -1,9 +1,15 @@
 import { Button, Htag, Paragraph, Rating, Tag } from "@/components/";
+import { IMenuItem } from "@/interfaces/menu.interface";
 import { withLayout } from "@/layout/layout";
-import { useState } from "react";
+import axios from "axios";
+import { GetStaticProps } from "next";
+import { FC, useState } from "react";
 
-function Home() {
+
+const Home: FC<HomeProps> = ({ menu, firstCategory }) => {
   const [rating, setRating] = useState(4);
+
+
   return (
     <>
       <Htag tag="h1">Текст</Htag>
@@ -25,8 +31,34 @@ function Home() {
       
       <Rating rating={rating} isEditable setRating={setRating} />
       <Rating rating={4} />
+
+      {menu.map((item) => (
+        <>
+          {item._id.secondCategory}
+        </>
+      ))}
     </>
   );
 }
 
 export default withLayout(Home);
+
+export const getStaticProps: GetStaticProps = async () => {
+  const firstCategory = 0;
+  console.log(`${process.env.NEXT_PUBLIC_DOMAIN}/api/top-page/find`);
+  const {data: menu} = await axios.post<IMenuItem[]>(`${process.env.NEXT_PUBLIC_DOMAIN}/api/top-page/find`, {
+   firstCategory
+  })
+
+  return {
+    props: {
+      menu,
+      firstCategory
+    }
+  }
+};
+
+interface HomeProps extends Record<string, unknown> {
+  firstCategory: number;
+  menu: IMenuItem[];
+}
