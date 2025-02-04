@@ -4,13 +4,14 @@ import { Header } from "./header/header";
 import { LayoutProps } from "./layout.props";
 import { Sidebar } from "./sidebar/sidebar";
 
+import { AppContextProvider, IAppContext } from "@/context/app.context";
 import styles from "./layout.module.css";
 
 const Layout: FC<LayoutProps> = ({ children }) => {
     return (
         <div className={styles.wrapper}>
             <Header className={styles.header} />
-            <Sidebar className={styles.sidebar}  />
+            <Sidebar className={styles.sidebar} />
             <div className={styles.body}>
                 {children}
             </div>
@@ -19,12 +20,14 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     )
 };
 
-export const withLayout = <T extends Record<string, unknown>,>(Component: FC<T>) => {
+export const withLayout = <T extends Record<string, unknown> & IAppContext,>(Component: FC<T>) => {
     return (props: T) => {
         return (
-            <Layout>
-                <Component {...props} />
-            </Layout>
+            <AppContextProvider menu={props.menu} firstCategory={props.firstCategory}>
+                <Layout>
+                    <Component {...props} />
+                </Layout>
+            </AppContextProvider>
         )
     };
 }

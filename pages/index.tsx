@@ -31,12 +31,6 @@ const Home: FC<HomeProps> = ({ menu, firstCategory }) => {
       
       <Rating rating={rating} isEditable setRating={setRating} />
       <Rating rating={4} />
-
-      {menu.map((item) => (
-        <>
-          {item._id.secondCategory}
-        </>
-      ))}
     </>
   );
 }
