@@ -45,7 +45,7 @@ export default withLayout(Home);
 
 export const getStaticProps: GetStaticProps = async () => {
   const firstCategory = 0;
-  console.log(`${process.env.NEXT_PUBLIC_DOMAIN}/api/top-page/find`);
+  
   const {data: menu} = await axios.post<IMenuItem[]>(`${process.env.NEXT_PUBLIC_DOMAIN}/api/top-page/find`, {
    firstCategory
   })
