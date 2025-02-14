@@ -15,6 +15,10 @@
     margin-top: 20px;
 }
 
+.firstLevelLink {
+    text-decoration: none;
+}
+
 .firstLevelActive,
 .firstLevel:hover {
     color: var(--primary);
@@ -42,6 +46,14 @@
     font-weight: 300;
     font-size: 12px;
     line-height: 16px;
+}
+
+.secondLevelBlock {
+    display: none;
+}
+
+.secondLevelOpened {
+    display: block;
 }
 
 .secondLevelBlockOpened:last-child {

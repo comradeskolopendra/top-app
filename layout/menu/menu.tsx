@@ -7,6 +7,7 @@ import styles from "./menu.module.css";
 
 import clsx from "clsx";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import BooksSvg from "./assets/books.svg";
 import CoursesSvg from "./assets/courses.svg";
 import ProductsSvg from "./assets/products.svg";
@@ -41,13 +42,28 @@ const firstLevelMenu: IFirstLevelMenuItem[] = [
 
 const Menu: FC = () => {
     const { menu, setMenu, firstCategory } = useContext(AppContext);
+    const router = useRouter();
+
+    const openSecondLevel = (secondCategory: string) => {
+        const updatedMenu = menu.map((menuItem => {
+            if (menuItem._id.secondCategory === secondCategory) {
+                menuItem.isOpened = !menuItem.isOpened
+            }
+
+            return menuItem;
+        }))
+
+        if (typeof setMenu === "function") {
+            setMenu(updatedMenu)
+        }
+    };
 
     const buildFirstLevel = () => {
         return (
             <>
                 {firstLevelMenu.map((item) => (
                     <div key={item.route}>
-                        <Link href={`${item.route}`}>
+                        <Link href={`${item.route}`} className={styles.firstLevelLink}>
                             <div className={clsx(styles.firstLevel, {
                                 [styles.firstLevelActive]: firstCategory === item.id
                             })}>
@@ -67,16 +83,29 @@ const Menu: FC = () => {
     const buildSecondLevel = (item: IFirstLevelMenuItem) => {
         return (
             <div className={styles.secondLevel}>
-                {menu.map((menuItem) => (
-                    <div key={menuItem._id.secondCategory}>
-                        <p className={styles.secondLevelTitle}>{menuItem._id.secondCategory}</p>
-                        <div className={clsx(styles.secondLevelBlock, {
-                            [styles.secondLevelOpened]: menuItem.isOpened
-                        })}>
-                            {buildThirdLevel(menuItem.pages, item.route)}
+                {menu.map((menuItem) => {
+                    const currentPage = router.asPath.split("/")[2];
+
+                    if (menuItem.pages.map(page => page.alias).includes(currentPage)) {
+                        menuItem.isOpened = true;
+                    }
+
+                    return (
+                        <div key={menuItem._id.secondCategory}>
+                            <p
+                                className={styles.secondLevelTitle}
+                                onClick={() => openSecondLevel(menuItem._id.secondCategory)}
+                            >
+                                {menuItem._id.secondCategory}
+                            </p>
+                            <div className={clsx(styles.secondLevelBlock, {
+                                [styles.secondLevelOpened]: menuItem.isOpened
+                            })}>
+                                {buildThirdLevel(menuItem.pages, item.route)}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    )
+                })}
             </div>
         )
     };
@@ -89,7 +118,7 @@ const Menu: FC = () => {
                         href={`/${route}/${page.alias}`}
                         key={page.alias}
                         className={clsx(styles.thirdLevel, {
-                            [styles.thirdLevelActive]: false
+                            [styles.thirdLevelActive]: router.asPath.split("/")[2] === page.alias
                         })}
                     >
                         {page.category}
