@@ -41,97 +41,12 @@ const firstLevelMenu: IFirstLevelMenuItem[] = [
 ];
 
 const Menu: FC = () => {
-    const { menu, setMenu, firstCategory } = useContext(AppContext);
-    const router = useRouter();
-
-    const openSecondLevel = (secondCategory: string) => {
-        const updatedMenu = menu.map((menuItem => {
-            if (menuItem._id.secondCategory === secondCategory) {
-                menuItem.isOpened = !menuItem.isOpened
-            }
-
-            return menuItem;
-        }))
-
-        if (typeof setMenu === "function") {
-            setMenu(updatedMenu)
-        }
-    };
-
-    const buildFirstLevel = () => {
-        return (
-            <>
-                {firstLevelMenu.map((item) => (
-                    <div key={item.route}>
-                        <Link href={`${item.route}`} className={styles.firstLevelLink}>
-                            <div className={clsx(styles.firstLevel, {
-                                [styles.firstLevelActive]: firstCategory === item.id
-                            })}>
-                                {item.icon}
-                                <span>
-                                    {item.name}
-                                </span>
-                            </div>
-                        </Link>
-                        {item.id === firstCategory && buildSecondLevel(item)}
-                    </div>
-                ))}
-            </>
-        )
-    };
-
-    const buildSecondLevel = (item: IFirstLevelMenuItem) => {
-        return (
-            <div className={styles.secondLevel}>
-                {menu.map((menuItem) => {
-                    const currentPage = router.asPath.split("/")[2];
-
-                    if (menuItem.pages.map(page => page.alias).includes(currentPage)) {
-                        menuItem.isOpened = true;
-                    }
-
-                    return (
-                        <div key={menuItem._id.secondCategory}>
-                            <p
-                                className={styles.secondLevelTitle}
-                                onClick={() => openSecondLevel(menuItem._id.secondCategory)}
-                            >
-                                {menuItem._id.secondCategory}
-                            </p>
-                            <div className={clsx(styles.secondLevelBlock, {
-                                [styles.secondLevelOpened]: menuItem.isOpened
-                            })}>
-                                {buildThirdLevel(menuItem.pages, item.route)}
-                            </div>
-                        </div>
-                    )
-                })}
-            </div>
-        )
-    };
-
-    const buildThirdLevel = (pages: IPageItem[], route: string) => {
-        return (
-            <>
-                {pages.map((page) => (
-                    <Link
-                        href={`/${route}/${page.alias}`}
-                        key={page.alias}
-                        className={clsx(styles.thirdLevel, {
-                            [styles.thirdLevelActive]: router.asPath.split("/")[2] === page.alias
-                        })}
-                    >
-                        {page.category}
-                    </Link>
-                ))}
-            </>
-        )
-    };
+    const {menu, setMenu, firstCategory} = useContext(AppContext);
 
     return (
-        <div className={styles.menu}>
-            {buildFirstLevel()}
-        </div>
+        <ul>
+            {menu.map(element => <li>{element._id.secondCategory}</li>)}
+        </ul>
     )
 };
 
