@@ -20,7 +20,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     )
 };
 
-export const withLayout = <T extends Record<string, unknown> & IAppContext,>(Component: FC<T>) => {
+export const withLayout = <T extends Record<string, unknown> & IAppContext>(Component: FC<T>) => {
     return (props: T) => {
         return (
             <AppContextProvider menu={props.menu} firstCategory={props.firstCategory}>

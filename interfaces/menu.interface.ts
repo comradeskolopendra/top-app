@@ -6,7 +6,7 @@ export interface IPageItem {
     title: string;
     _id: string;
     category: string;
-};
+}
 
 export interface IMenuItem {
     _id: {

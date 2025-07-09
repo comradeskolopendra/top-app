@@ -9,7 +9,6 @@ import { FC, useState } from "react";
 const Home: FC<HomeProps> = ({ menu, firstCategory }) => {
   const [rating, setRating] = useState(4);
 
-
   return (
     <>
       <Htag tag="h1">Текст</Htag>
@@ -37,11 +36,11 @@ const Home: FC<HomeProps> = ({ menu, firstCategory }) => {
 
 export default withLayout(Home);
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const firstCategory = 0;
   
   const {data: menu} = await axios.post<IMenuItem[]>(`${process.env.NEXT_PUBLIC_DOMAIN}/api/top-page/find`, {
-   firstCategory
+   firstCategory: firstCategory,
   })
 
   return {
