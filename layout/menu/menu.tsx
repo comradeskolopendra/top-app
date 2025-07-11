@@ -1,45 +1,17 @@
 import { AppContext } from "@/context/app.context";
 import {IFirstLevelMenuItem, IPageItem} from "@/interfaces/menu.interface";
-import { TopLevelCategory } from "@/interfaces/page.interface";
 import { FC, useContext } from "react";
+
+import {firstLevelMenu} from "@/helpers/helpers";
 
 import styles from "./menu.module.css";
 
 import clsx from "clsx";
-import BooksSvg from "./assets/books.svg";
-import CoursesSvg from "./assets/courses.svg";
-import ProductsSvg from "./assets/products.svg";
-import ServicesSvg from "./assets/services.svg";
 import Link from "next/link";
 
 import {useRouter} from "next/router";
 
-const firstLevelMenu: IFirstLevelMenuItem[] = [
-    {
-        route: "courses",
-        name: "Курсы",
-        icon: <CoursesSvg />,
-        id: TopLevelCategory.COURSES
-    },
-    {
-        route: "services",
-        name: "Сервисы",
-        icon: <ServicesSvg />,
-        id: TopLevelCategory.SERVICES
-    },
-    {
-        route: "books",
-        name: "Книги",
-        icon: <BooksSvg />,
-        id: TopLevelCategory.BOOKS
-    },
-    {
-        route: "products",
-        name: "Товары",
-        icon: <ProductsSvg />,
-        id: TopLevelCategory.PRODUCTS
-    }
-];
+
 
 const Menu: FC = () => {
     const {menu, setMenu, firstCategory} = useContext(AppContext);
@@ -60,20 +32,22 @@ const Menu: FC = () => {
     const buildFirstLevel = ()=> {
         return (
             <>
-                {firstLevelMenu.map(flMenu => (
-                    <div key={flMenu.route}>
-                        <Link className={styles.firstLevelLink} href={`/${flMenu.route}`}>
-                            <div className={clsx(styles.firstLevel, {
-                                [styles.firstLevelActive]: flMenu.id === firstCategory
-                            })}>
-                                {flMenu.icon}
-                                <span>{flMenu.name}</span>
-                            </div>
-                        </Link>
+                {firstLevelMenu.map(flMenu => {
+                    return (
+                        <div key={flMenu.route}>
+                            <Link className={styles.firstLevelLink} href={`/${flMenu.route}`}>
+                                <div className={clsx(styles.firstLevel, {
+                                    [styles.firstLevelActive]: flMenu.id === firstCategory
+                                })}>
+                                    {flMenu.icon}
+                                    <span>{flMenu.name}</span>
+                                </div>
+                            </Link>
 
-                        {flMenu.id === firstCategory && buildSecondLevel(flMenu)}
-                    </div>
-                ))}
+                            {flMenu.id === firstCategory && buildSecondLevel(flMenu)}
+                        </div>
+                    )
+                })}
             </>
         )
     };
