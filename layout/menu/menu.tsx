@@ -10,6 +10,9 @@ import BooksSvg from "./assets/books.svg";
 import CoursesSvg from "./assets/courses.svg";
 import ProductsSvg from "./assets/products.svg";
 import ServicesSvg from "./assets/services.svg";
+import Link from "next/link";
+
+import {useRouter} from "next/router";
 
 const firstLevelMenu: IFirstLevelMenuItem[] = [
     {
@@ -40,20 +43,33 @@ const firstLevelMenu: IFirstLevelMenuItem[] = [
 
 const Menu: FC = () => {
     const {menu, setMenu, firstCategory} = useContext(AppContext);
+    const router = useRouter();
+
+    const openSecondBlock = (secondCategory: string) => {
+        if (setMenu) {
+            setMenu(menu.map(element => {
+                if (element._id.secondCategory === secondCategory) {
+                    element.isOpened = !element.isOpened;
+                }
+
+                return element;
+            }))
+        }
+    };
 
     const buildFirstLevel = ()=> {
         return (
             <>
                 {firstLevelMenu.map(flMenu => (
                     <div key={flMenu.route}>
-                        <a className={styles.firstLevelLink} href={`/${flMenu.route}`}>
+                        <Link className={styles.firstLevelLink} href={`/${flMenu.route}`}>
                             <div className={clsx(styles.firstLevel, {
                                 [styles.firstLevelActive]: flMenu.id === firstCategory
                             })}>
                                 {flMenu.icon}
                                 <span>{flMenu.name}</span>
                             </div>
-                        </a>
+                        </Link>
 
                         {flMenu.id === firstCategory && buildSecondLevel(flMenu)}
                     </div>
@@ -65,29 +81,43 @@ const Menu: FC = () => {
     const buildSecondLevel = (flMenu: IFirstLevelMenuItem) => {
         return (
             <div className={styles.secondBlock}>
-                {menu.map((menuItem) => (
-                    <div key={menuItem._id.secondCategory}>
-                        <div className={styles.secondLevel}>{menuItem._id.secondCategory}</div>
-                        <div className={clsx(styles.secondLevelBlock, {
-                            [styles.secondLevelBlockOpened]: menuItem.isOpened
-                        })}>
-                            {buildThirdLevel(menuItem.pages, flMenu.route)}
+                {menu.map((menuItem) => {
+                    const aliases = menuItem.pages.map((page) => page.alias);
+                    const openedItem = router.asPath.split("/")[2];
+
+                    if (aliases.includes(openedItem)) {
+                        menuItem.isOpened = true;
+                    }
+
+                    return (
+                        <div key={menuItem._id.secondCategory}>
+                            <div className={styles.secondLevel} onClick={() => openSecondBlock(menuItem._id.secondCategory)}>{menuItem._id.secondCategory}</div>
+                            <div className={clsx(styles.secondLevelBlock, {
+                                [styles.secondLevelBlockOpened]: menuItem.isOpened
+                            })}>
+                                {buildThirdLevel(menuItem.pages, flMenu.route)}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    )
+                })
+                }
             </div>
         )
     };
 
     const buildThirdLevel = (pages: IPageItem[], route: string) => {
         return (
-                pages.map(page => (
-                    <a href={`/${route }/${page.alias}`} className={clsx(styles.thirdLevel, {
-                        [styles.thirdLevelActive]: false
-                    })}>
-                        {page.category}
-                    </a>
-                ))
+                pages.map(page => {
+                    const openedItem = router.asPath.split("/")[2];
+
+                    return (
+                        <Link href={`/${route}/${page.alias}`} className={clsx(styles.thirdLevel, {
+                            [styles.thirdLevelActive]: page.alias === openedItem
+                        })}>
+                            {page.category}
+                        </Link>
+                    )
+                })
         )
     };
 
