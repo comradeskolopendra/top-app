@@ -31,3 +31,7 @@ export const firstLevelMenu: IFirstLevelMenuItem[] = [
         id: TopLevelCategory.PRODUCTS
     }
 ];
+
+export const formatCurrency = (currency: number) => {
+    return new Intl.NumberFormat("ru-RU", {style: "currency", currency: "RUB", minimumFractionDigits: 0 }).format(currency);
+}

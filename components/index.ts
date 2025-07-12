@@ -3,4 +3,6 @@ export * from "./h-tag/h-tag";
 export * from "./paragraph/paragraph";
 export * from "./rating/rating";
 export * from "./tag/tag";
-
+export * from "./top-page/top-page";
+export * from "./card/card";
+export * from "./hh-data/hh-data";

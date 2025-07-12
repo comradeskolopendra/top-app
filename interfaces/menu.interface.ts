@@ -6,6 +6,9 @@ export interface IPageItem {
     title: string;
     _id: string;
     category: string;
+    hh: {
+        count: number;
+    }
 }
 
 export interface IMenuItem {

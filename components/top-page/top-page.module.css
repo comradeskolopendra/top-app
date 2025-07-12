@@ -1,0 +1,22 @@
+.header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    justify-items: left;
+
+    gap: 20px;
+}
+
+.hhBlock {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+}
+
+.hhTitle {
+    margin-bottom: 25px;
+}
+
+.page {
+    margin-top: 40px;
+}
