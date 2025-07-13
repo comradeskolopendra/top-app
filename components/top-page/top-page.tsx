@@ -1,24 +1,35 @@
-import {FC} from "react";
+import {FC, useCallback, useEffect, useReducer} from "react";
 import {TopPageProps} from "./top-page.props";
-import {HHData, Htag, Tag, Advantages, Paragraph} from "@/components";
+import {Advantages, HHData, Htag, Sort, Tag} from "@/components";
 import styles from "./top-page.module.css";
 import {TopLevelCategory} from "@/interfaces/page.interface";
-
+import {SortEnum} from "@/components/sort/sort.props";
+import {sortReducer} from "@/components/top-page/sort.reducer";
 
 export const TopPage: FC<TopPageProps> = ({firstCategory, page, products}) => {
+    const [{products: sortedProducts, sort}, dispatch] = useReducer(sortReducer, {sort: SortEnum.RATING, products: products});
+
+    const setSort = useCallback((type: SortEnum) => {
+        if (type !== SortEnum.RESET) {
+            dispatch({type});
+        }
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch({type: SortEnum.RESET, payload: products})
+    }, [products]);
+
     return (
         <div className={styles.page}>
             <header className={styles.header}>
                 <Htag tag={"h1"}>{page.title}</Htag>
                 <Tag size="m" color="grey">{products && products.length}</Tag>
 
-                <span>
-                    Сортировка
-                </span>
+                <Sort sort={sort} setSort={setSort}/>
             </header>
 
             <div>
-                {products && products.map((product => (
+                {sortedProducts && sortedProducts.map((product => (
                     <div key={product._id}>
                         {product.title}
                     </div>

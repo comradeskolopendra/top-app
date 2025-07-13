@@ -1,0 +1,28 @@
+.active {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.icon {
+    display: none;
+}
+
+.active .icon {
+    display: block;
+}
+
+.sort {
+    display: flex;
+    gap: 40px;
+}
+
+.sort span {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+
+    gap: 8px;
+
+    cursor: pointer;
+    user-select: none;
+}
