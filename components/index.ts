@@ -6,3 +6,4 @@ export * from "./tag/tag";
 export * from "./top-page/top-page";
 export * from "./card/card";
 export * from "./hh-data/hh-data";
+export * from "./advantages/advantages";

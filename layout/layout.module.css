@@ -6,7 +6,7 @@
     ". sidebar body ."
     "footer footer footer footer";
     grid-template-rows: auto 1fr auto;
-    gap: 0 30px;
+    gap: 40px 30px;
 
     min-height: 100vh;
 }
@@ -40,6 +40,10 @@
 
     .sidebar {
         display: none;
+    }
+
+    .body {
+        padding: 15px;
     }
 
     .header {

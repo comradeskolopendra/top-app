@@ -1,0 +1,42 @@
+.title {
+    margin-bottom: 25px;
+}
+
+.wrapper {
+    margin-top: 45px;
+}
+
+.advantages {
+    display: grid;
+    gap: 30px;
+}
+
+.advantage {
+    display: grid;
+
+    gap: 10px;
+}
+
+.advantageHead {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+
+    align-items: center;
+
+    gap: 40px;
+}
+
+.advantageBody {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+
+    gap: 40px;
+}
+
+.advantageTitle {
+    font-weight: bold;
+}
+
+.line {
+    color: var(--gray-light);
+}
