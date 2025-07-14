@@ -14,6 +14,8 @@
     line-height: 22px;
 
     font-family: "Noto Sans", sans-serif;
+
+    box-sizing: border-box;
 }
 
 .input::placeholder {

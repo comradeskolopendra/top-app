@@ -10,3 +10,4 @@ export * from "./advantages/advantages";
 export * from "./sort/sort";
 export * from "./input/input";
 export * from "./textarea/textarea";
+export * from "./search/search";

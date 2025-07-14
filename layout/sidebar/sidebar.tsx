@@ -7,14 +7,14 @@ import Logo from "./assets/logo.svg";
 
 
 import styles from "./sidebar.module.css";
+import {Search} from "@/components";
 
 export const Sidebar: FC<SidebarProps> = ({className, ...props}) => {
 
     return (
         <aside className={clsx(styles.sidebar, className)} {...props}>
             <Logo/>
-            <div>Поиск</div>
-
+            <Search/>
             <Menu/>
         </aside>
     )
