@@ -1,4 +1,4 @@
-import {Button, Htag, Input, Paragraph, Rating, Tag} from "@/components/";
+import {Button, Htag, Input, Paragraph, Rating, Tag, TextArea} from "@/components/";
 import { IMenuItem } from "@/interfaces/menu.interface";
 import { withLayout } from "@/layout/layout";
 import axios from "axios";
@@ -32,6 +32,7 @@ const Home: FC<HomeProps> = ({ menu, firstCategory }) => {
       <Rating rating={4} />
 
         <Input placeholder={"test"}/>
+        <TextArea placeholder={"test 2"}/>
     </>
   );
 }
