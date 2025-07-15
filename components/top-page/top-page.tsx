@@ -1,6 +1,6 @@
 import {FC, useCallback, useEffect, useReducer} from "react";
 import {TopPageProps} from "./top-page.props";
-import {Advantages, HHData, Htag, Sort, Tag} from "@/components";
+import {Advantages, HHData, Htag, Product, Sort, Tag} from "@/components";
 import styles from "./top-page.module.css";
 import {TopLevelCategory} from "@/interfaces/page.interface";
 import {SortEnum} from "@/components/sort/sort.props";
@@ -30,9 +30,7 @@ export const TopPage: FC<TopPageProps> = ({firstCategory, page, products}) => {
 
             <div>
                 {sortedProducts && sortedProducts.map((product => (
-                    <div key={product._id}>
-                        {product.title}
-                    </div>
+                    <Product key={product._id} product={product}/>
                 )))}
             </div>
 

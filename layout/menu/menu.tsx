@@ -12,10 +12,10 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 
 
-
 const Menu: FC = () => {
     const {menu, setMenu, firstCategory} = useContext(AppContext);
     const router = useRouter();
+
 
     const openSecondBlock = (secondCategory: string) => {
         if (setMenu) {

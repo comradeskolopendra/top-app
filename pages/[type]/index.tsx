@@ -5,9 +5,18 @@ import {IMenuItem} from "@/interfaces/menu.interface";
 import {firstLevelMenu} from "@/helpers/helpers";
 import {useRouter} from "next/router";
 import {TopLevelCategory} from "@/interfaces/page.interface";
+import {FC, useContext, useEffect} from "react";
+import {AppContext} from "@/context/app.context";
 
-export const Type = () => {
+export const Type: FC<TypeProps> = ({menu}) => {
     const router = useRouter();
+    const {setMenu} = useContext(AppContext);
+
+    useEffect(() => {
+        if (setMenu) {
+            setMenu(menu);
+        }
+    }, [menu])
 
     return (<>{router.asPath}</>)
 };
@@ -28,6 +37,8 @@ export const getStaticProps: GetStaticProps<TypeProps> = async ({params}) => {
     }
 
     const firstCategoryItem = firstLevelMenu.find(lMenu => lMenu.route === params.type);
+
+    console.log(firstCategoryItem, params.type);
 
     if (!firstCategoryItem) {
         return {
