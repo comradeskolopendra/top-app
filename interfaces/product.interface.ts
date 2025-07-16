@@ -31,6 +31,6 @@ export interface IProductModel {
     reviews: IReviewModel[];
     reviewCount: number;
     reviewAvg?: number;
-    advantages: string;
-    disadvantages: string;
+    advantages?: string;
+    disadvantages?: string;
 }
