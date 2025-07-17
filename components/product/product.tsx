@@ -84,7 +84,7 @@ export const Product: FC<ProductProps> = ({product, className, color, ...rest}) 
                 )}
             </div>
 
-            <Divider className={styles.hr}/>
+            <Divider className={styles.hr2}/>
 
             <div className={styles.actions}>
                 <Button appearance={"primary"}>Узнать подробнее</Button>

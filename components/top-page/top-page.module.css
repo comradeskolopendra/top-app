@@ -5,6 +5,8 @@
     justify-items: left;
 
     gap: 20px;
+
+    margin-bottom: 30px;
 }
 
 .hhBlock {
@@ -48,4 +50,10 @@
 
 .tags {
     margin-top: 20px;
+}
+
+@media screen and (max-width: 640px) {
+    .header {
+        grid-template-columns: auto 1fr;
+    }
 }
