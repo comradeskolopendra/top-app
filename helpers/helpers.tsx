@@ -35,3 +35,21 @@ export const firstLevelMenu: IFirstLevelMenuItem[] = [
 export const formatCurrency = (currency: number) => {
     return new Intl.NumberFormat("ru-RU", {style: "currency", currency: "RUB", minimumFractionDigits: 0 }).format(currency);
 }
+
+// [отзыв, отзыва, отзывов]
+export const declWord = (number: number, titles: [string, string, string]) => {
+    const lastTens = number % 100;
+    const lastNum = number % 10;
+
+    if (lastNum === 1 && lastTens !== 11) {
+        return titles[0]
+    } else if (lastNum > 1 && lastNum < 5) {
+        if (lastTens > 10) {
+            return titles[2];
+        } else {
+            return titles[1];
+        }
+    } else {
+        return titles[2]
+    }
+};

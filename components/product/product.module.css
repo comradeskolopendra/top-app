@@ -115,3 +115,27 @@
 
     margin-bottom: 5px;
 }
+
+.feature {
+    padding-right: 60px;
+}
+
+.characteristics {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: baseline;
+
+    gap: 10px;
+
+    font-size: 16px;
+    line-height: 32px;
+}
+
+.characteristicName {
+    font-weight: bold;
+}
+
+.dots {
+    border-bottom: 1px dashed var(--gray-light);
+    margin-bottom: 5px;
+}

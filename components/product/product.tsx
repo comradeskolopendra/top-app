@@ -3,7 +3,7 @@ import {ProductProps} from "./product.props";
 import styles from "./product.module.css";
 import clsx from "clsx";
 import {Button, Card, Divider, Rating, Tag} from "@/components";
-import {formatCurrency} from "@/helpers/helpers";
+import {declWord, formatCurrency} from "@/helpers/helpers";
 
 export const Product: FC<ProductProps> = ({product, className, color, ...rest}) => {
 
@@ -45,7 +45,7 @@ export const Product: FC<ProductProps> = ({product, className, color, ...rest}) 
             </div>
 
             <div className={styles.ratingTitle}>
-                {product.reviewCount} отзывов
+                {product.reviewCount} {declWord(product.reviewCount, ["отзыв", "отзыва", "отзывов"])}
             </div>
 
             <Divider className={styles.hr}/>
@@ -55,7 +55,17 @@ export const Product: FC<ProductProps> = ({product, className, color, ...rest}) 
             </div>
 
             <div className={styles.feature}>
-                features
+                {product.characteristics.map((char) => (
+                    <div className={styles.characteristics} key={char.name}>
+                        <span className={styles.characteristicName}>
+                             {char.name}
+                        </span>
+                        <span className={styles.dots}/>
+                        <span className={styles.characteristicValue}>
+                            {char.value}
+                        </span>
+                    </div>
+                ))}
             </div>
 
             <div className={styles.advBlock}>
