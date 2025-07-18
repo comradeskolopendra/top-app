@@ -2,7 +2,7 @@ import {FC, useState} from "react";
 import {ProductProps} from "./product.props";
 import styles from "./product.module.css";
 import clsx from "clsx";
-import {Button, Card, Divider, Rating, Tag} from "@/components";
+import {Button, Card, Divider, Rating, ReviewForm, Tag} from "@/components";
 import {declWord, formatCurrency} from "@/helpers/helpers";
 import {Review} from "@/components/review/review";
 
@@ -116,6 +116,8 @@ export const Product: FC<ProductProps> = ({product, className, color, ...rest}) 
                         <Divider/>
                     </>
                 ))}
+
+                <ReviewForm productId={product._id}/>
             </Card>
         </>
     )
