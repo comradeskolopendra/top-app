@@ -87,7 +87,7 @@ const Menu: FC = () => {
                     return (
                         <Link href={`/${route}/${page.alias}`} className={clsx(styles.thirdLevel, {
                             [styles.thirdLevelActive]: page.alias === openedItem
-                        })}>
+                        })} key={page._id}>
                             {page.category}
                         </Link>
                     )

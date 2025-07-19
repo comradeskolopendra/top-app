@@ -5,6 +5,7 @@ import clsx from "clsx";
 import {Button, Card, Divider, Rating, ReviewForm, Tag} from "@/components";
 import {declWord, formatCurrency} from "@/helpers/helpers";
 import {Review} from "@/components/review/review";
+import React from "react";
 
 export const Product: FC<ProductProps> = ({product, className, color, ...rest}) => {
     const [opened, setOpened] = useState(false);
@@ -111,10 +112,10 @@ export const Product: FC<ProductProps> = ({product, className, color, ...rest}) 
                 [styles.closed]: !opened
             })}>
                 {product.reviews.map((review) => (
-                    <>
-                        <Review review={review} key={review._id}/>
+                    <React.Fragment key={review._id}>
+                        <Review review={review}/>
                         <Divider/>
-                    </>
+                    </React.Fragment>
                 ))}
 
                 <ReviewForm productId={product._id}/>

@@ -1,26 +1,52 @@
 import {FC} from "react";
-import {ReviewFormProps} from "./review-form.props";
+import {ReviewFormProps, IReviewForm} from "./review-form.props";
 import clsx from "clsx";
 import styles from "./review-form.module.css";
 import {Button, Input, Rating, TextArea} from "@/components";
 
 import CloseSuccess from "./assets/close-success.svg";
+import {useForm, Controller} from "react-hook-form";
+
 
 
 export const ReviewForm: FC<ReviewFormProps> = ({productId, className, ...rest}) => {
+    const {
+        register,
+        control,
+        handleSubmit
+    } = useForm<IReviewForm>()
+
+    const handleSubmitForm = (data: IReviewForm) => {
+        console.log(data);
+    };
 
     return (
-        <>
+        <form
+            onSubmit={handleSubmit(handleSubmitForm)}
+        >
             <div className={clsx(styles.reviewForm, className)} {...rest}>
-                <Input placeholder={"Имя"} />
-                <Input placeholder={"Заголовок отзыва"} className={styles.titleInput} />
+                <Input {...register("name")} placeholder={"Имя"} />
+                <Input {...register("title")} placeholder={"Заголовок отзыва"} className={styles.titleInput} />
+
 
                 <div className={styles.rating}>
                     <span>Оценка: </span>
-                    <Rating rating={0} isEditable/>
+                    <Controller
+                        control={control}
+                        name={"rating"}
+                        render={({field}) => (
+                            <Rating
+                                rating={field.value}
+                                ref={field.ref}
+                                setRating={field.onChange}
+                                isEditable
+                            />
+                        )}
+                    />
                 </div>
 
-                <TextArea placeholder={"Текст"} className={styles.textarea}/>
+
+                <TextArea {...register("description")} placeholder={"Текст"} className={styles.textarea}/>
 
                 <div className={styles.submit}>
                     <Button appearance={"primary"}>
@@ -37,6 +63,6 @@ export const ReviewForm: FC<ReviewFormProps> = ({productId, className, ...rest})
 
                 <CloseSuccess className={styles.close}/>
             </div>
-        </>
+        </form>
     )
 };

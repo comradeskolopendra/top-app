@@ -1,10 +1,10 @@
 import clsx from "clsx";
-import { FC, JSX, KeyboardEvent, useEffect, useState } from "react";
+import { FC, JSX, KeyboardEvent, useEffect, useState, forwardRef } from "react";
 import StarIcon from "./assets/star.svg";
 import styles from "./rating.module.css";
 import { RatingProps } from "./rating.props";
 
-export const Rating: FC<RatingProps> = ({rating, isEditable = false, setRating, ...rest}) => {
+export const Rating = forwardRef<HTMLDivElement, RatingProps>(({rating, isEditable = false, setRating, ...rest}, ref) => {
     const [ratingArray, setRatingArray] = useState<JSX.Element[]>(new Array(5).fill(<></>));
 
     useEffect(() => {
@@ -49,9 +49,10 @@ export const Rating: FC<RatingProps> = ({rating, isEditable = false, setRating, 
 
     return (
         <div
+            ref={ref}
             {...rest}
         >
             {ratingArray.map((Rated, index) => <span key={index}>{Rated}</span>)}
         </div>
     )
-};
+});
