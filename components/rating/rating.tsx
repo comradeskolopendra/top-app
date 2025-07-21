@@ -4,7 +4,7 @@ import StarIcon from "./assets/star.svg";
 import styles from "./rating.module.css";
 import { RatingProps } from "./rating.props";
 
-export const Rating = forwardRef<HTMLDivElement, RatingProps>(({rating, isEditable = false, setRating, ...rest}, ref) => {
+export const Rating = forwardRef<HTMLDivElement, RatingProps>(({className, error, rating, isEditable = false, setRating, ...rest}, ref) => {
     const [ratingArray, setRatingArray] = useState<JSX.Element[]>(new Array(5).fill(<></>));
 
     useEffect(() => {
@@ -16,7 +16,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(({rating, isEditab
             <StarIcon 
                 className={clsx(styles.star, {
                     [styles.filled]: index < currentRating,
-                    [styles.editable]: isEditable
+                    [styles.editable]: isEditable,
                 })}
                 onMouseEnter={() => handleHoverRating(index + 1)}
                 onMouseLeave={() => handleHoverRating(rating)}
@@ -50,9 +50,18 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(({rating, isEditab
     return (
         <div
             ref={ref}
+            className={clsx(styles.ratingWrapper, className)}
             {...rest}
         >
-            {ratingArray.map((Rated, index) => <span key={index}>{Rated}</span>)}
+            {ratingArray.map((rate, index) =>
+                <span
+                    key={index}
+                    className={clsx({
+                        [styles.error]: error,
+                    })}
+                >{rate}</span>
+            )}
+            {error && <span className={styles.errorMessage}>{error.message}</span>}
         </div>
     )
 });

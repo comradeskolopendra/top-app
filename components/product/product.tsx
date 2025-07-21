@@ -6,6 +6,7 @@ import {Button, Card, Divider, Rating, ReviewForm, Tag} from "@/components";
 import {declWord, formatCurrency} from "@/helpers/helpers";
 import {Review} from "@/components/review/review";
 import React from "react";
+import Image from "next/image";
 
 export const Product: FC<ProductProps> = ({product, className, color, ...rest}) => {
     const [opened, setOpened] = useState(false);
@@ -18,7 +19,7 @@ export const Product: FC<ProductProps> = ({product, className, color, ...rest}) 
         <>
             <Card className={clsx(styles.product, className)} {...rest}>
                 <div className={styles.logo}>
-                    <img src={product.image} alt={product.title}/>
+                    <Image width={70} height={70} src={product.image} alt={product.title}/>
                 </div>
 
                 <div className={styles.title}>

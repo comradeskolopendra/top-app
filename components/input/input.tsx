@@ -3,12 +3,17 @@ import {InputProps} from "./input.props";
 import clsx from "clsx";
 import styles from "./input.module.css";
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(({className, ...rest}, ref) => {
+export const Input = forwardRef<HTMLInputElement, InputProps>(({className, error, ...rest}, ref) => {
     return (
-        <input
-            ref={ref}
-            className={clsx(styles.input, className)}
-            {...rest}
-        />
+        <div className={styles.inputWrapper}>
+            <input
+                ref={ref}
+                className={clsx(styles.input, className, {
+                    [styles.error]: error
+                })}
+                {...rest}
+            />
+            {error && <span className={styles.errorMessage}>{error.message}</span>}
+        </div>
     )
 });

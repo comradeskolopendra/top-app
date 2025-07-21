@@ -13,7 +13,10 @@ export const ReviewForm: FC<ReviewFormProps> = ({productId, className, ...rest})
     const {
         register,
         control,
-        handleSubmit
+        handleSubmit,
+        formState: {
+            errors
+        }
     } = useForm<IReviewForm>()
 
     const handleSubmitForm = (data: IReviewForm) => {
@@ -25,8 +28,31 @@ export const ReviewForm: FC<ReviewFormProps> = ({productId, className, ...rest})
             onSubmit={handleSubmit(handleSubmitForm)}
         >
             <div className={clsx(styles.reviewForm, className)} {...rest}>
-                <Input {...register("name")} placeholder={"Имя"} />
-                <Input {...register("title")} placeholder={"Заголовок отзыва"} className={styles.titleInput} />
+                <Input
+                    {...register("name",
+                        {
+                            required: {
+                                value: true,
+                                message: "Заполните имя"
+                            }
+                        }
+                    )}
+                    error={errors.name}
+                    placeholder={"Имя"}
+                />
+                <Input
+                    {...register("title",
+                        {
+                            required: {
+                                value: true,
+                                message: "Заполните название"
+                            }
+                        }
+                    )}
+                    error={errors.title}
+                    placeholder={"Заголовок отзыва"}
+                    className={styles.titleInput}
+                />
 
 
                 <div className={styles.rating}>
@@ -34,11 +60,18 @@ export const ReviewForm: FC<ReviewFormProps> = ({productId, className, ...rest})
                     <Controller
                         control={control}
                         name={"rating"}
+                        rules={{
+                            required: {
+                                value: true,
+                                message: "Общая оценка обязательна"
+                            }
+                        }}
                         render={({field}) => (
                             <Rating
                                 rating={field.value}
                                 ref={field.ref}
                                 setRating={field.onChange}
+                                error={errors.rating}
                                 isEditable
                             />
                         )}
@@ -46,7 +79,12 @@ export const ReviewForm: FC<ReviewFormProps> = ({productId, className, ...rest})
                 </div>
 
 
-                <TextArea {...register("description")} placeholder={"Текст"} className={styles.textarea}/>
+                <TextArea
+                    {...register('description', { required: { value: true, message: 'Заполните описание' } })}
+                    error={errors.description}
+                    placeholder={"Текст отзыва"}
+                    className={styles.textarea}
+                />
 
                 <div className={styles.submit}>
                     <Button appearance={"primary"}>
