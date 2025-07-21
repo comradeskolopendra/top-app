@@ -103,6 +103,11 @@
     line-height: 22px;
 }
 
+.scrollLink {
+    text-decoration: none;
+    color: inherit;
+}
+
 .advantages {
     border-left: 2px solid var(--green);
     padding-left: 15px;

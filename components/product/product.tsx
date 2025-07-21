@@ -1,4 +1,4 @@
-import {FC, useState} from "react";
+import {FC, useRef, useState} from "react";
 import {ProductProps} from "./product.props";
 import styles from "./product.module.css";
 import clsx from "clsx";
@@ -10,14 +10,20 @@ import Image from "next/image";
 
 export const Product: FC<ProductProps> = ({product, className, color, ...rest}) => {
     const [opened, setOpened] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
 
     const handleOpenReviews = () => {
         setOpened(prevState => !prevState)
     };
 
+    const handleScrollReview = () => {
+        setOpened(true);
+        ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
     return (
-        <>
-            <Card className={clsx(styles.product, className)} {...rest}>
+        <div className={clsx(className)} {...rest}>
+            <Card className={clsx(styles.product)}>
                 <div className={styles.logo}>
                     <Image width={70} height={70} src={product.image} alt={product.title}/>
                 </div>
@@ -54,7 +60,9 @@ export const Product: FC<ProductProps> = ({product, className, color, ...rest}) 
                 </div>
 
                 <div className={styles.ratingTitle}>
-                    {product.reviewCount} {declWord(product.reviewCount, ["отзыв", "отзыва", "отзывов"])}
+                    <a className={styles.scrollLink} href={"#ref"} onClick={handleScrollReview}>
+                        {product.reviewCount} {declWord(product.reviewCount, ["отзыв", "отзыва", "отзывов"])}
+                    </a>
                 </div>
 
                 <Divider className={styles.hr}/>
@@ -108,10 +116,14 @@ export const Product: FC<ProductProps> = ({product, className, color, ...rest}) 
                 </div>
             </Card>
 
-            <Card color={"blue"} className={clsx(styles.reviews, {
-                [styles.opened]: opened,
-                [styles.closed]: !opened
-            })}>
+            <Card
+                color={"blue"}
+                ref={ref}
+                className={clsx(styles.reviews, {
+                    [styles.opened]: opened,
+                    [styles.closed]: !opened
+                })}
+            >
                 {product.reviews.map((review) => (
                     <React.Fragment key={review._id}>
                         <Review review={review}/>
@@ -121,6 +133,6 @@ export const Product: FC<ProductProps> = ({product, className, color, ...rest}) 
 
                 <ReviewForm productId={product._id}/>
             </Card>
-        </>
+        </div>
     )
 };
