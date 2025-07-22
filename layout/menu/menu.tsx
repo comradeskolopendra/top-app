@@ -11,10 +11,36 @@ import Link from "next/link";
 
 import {useRouter} from "next/router";
 
+import {motion} from "framer-motion";
+
 
 const Menu: FC = () => {
     const {menu, setMenu, firstCategory} = useContext(AppContext);
     const router = useRouter();
+
+    const variants = {
+        "visible": {
+            transition: {
+                when: "beforeChildren",
+                staggerChildren: 0.1
+            },
+            marginBottom: 20
+        },
+        "hidden": {
+            marginBottom: 0
+        }
+    }
+
+    const variantsThirdLevel = {
+        "visible": {
+            opacity: 1,
+            height: "auto"
+        },
+        "hidden": {
+            opacity: 0,
+            height: 0
+        }
+    }
 
 
     const openSecondBlock = (secondCategory: string) => {
@@ -66,11 +92,15 @@ const Menu: FC = () => {
                     return (
                         <div key={menuItem._id.secondCategory}>
                             <div className={styles.secondLevel} onClick={() => openSecondBlock(menuItem._id.secondCategory)}>{menuItem._id.secondCategory}</div>
-                            <div className={clsx(styles.secondLevelBlock, {
-                                [styles.secondLevelBlockOpened]: menuItem.isOpened
-                            })}>
+                            <motion.div
+                                layout
+                                variants={variants}
+                                initial={menuItem.isOpened ? "visible" : "hidden"}
+                                animate={menuItem.isOpened ? "visible" : "hidden"}
+                                className={clsx(styles.secondLevelBlock)}
+                            >
                                 {buildThirdLevel(menuItem.pages, flMenu.route)}
-                            </div>
+                            </motion.div>
                         </div>
                     )
                 })
@@ -85,11 +115,19 @@ const Menu: FC = () => {
                     const openedItem = router.asPath.split("/")[2];
 
                     return (
-                        <Link href={`/${route}/${page.alias}`} className={clsx(styles.thirdLevel, {
-                            [styles.thirdLevelActive]: page.alias === openedItem
-                        })} key={page._id}>
-                            {page.category}
-                        </Link>
+                        <motion.div
+                            variants={variantsThirdLevel}
+                            key={page._id}
+                        >
+                            <Link
+                                href={`/${route}/${page.alias}`}
+                                className={clsx(styles.thirdLevel, {
+                                    [styles.thirdLevelActive]: page.alias === openedItem
+                                })}
+                            >
+                                {page.category}
+                            </Link>
+                        </motion.div>
                     )
                 })
         )
