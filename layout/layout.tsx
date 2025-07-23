@@ -6,16 +6,22 @@ import { Sidebar } from "./sidebar/sidebar";
 
 import { AppContextProvider, IAppContext } from "@/context/app.context";
 import styles from "./layout.module.css";
+import {Up} from "@/components";
 
 const Layout: FC<LayoutProps> = ({ children }) => {
     return (
         <div className={styles.wrapper}>
             <Header className={styles.header} />
+
             <Sidebar className={styles.sidebar} />
+
             <div className={styles.body}>
                 {children}
             </div>
+
             <Footer className={styles.footer} />
+
+            <Up/>
         </div>
     )
 };

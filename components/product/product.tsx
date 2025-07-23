@@ -1,4 +1,4 @@
-import {FC, useRef, useState} from "react";
+import {FC, useEffect, useRef, useState} from "react";
 import {ProductProps} from "./product.props";
 import styles from "./product.module.css";
 import clsx from "clsx";
@@ -7,10 +7,22 @@ import {declWord, formatCurrency} from "@/helpers/helpers";
 import {Review} from "@/components/review/review";
 import React from "react";
 import Image from "next/image";
+import {motion, useAnimation} from "framer-motion";
 
-export const Product: FC<ProductProps> = ({product, className, color, ...rest}) => {
+export const Product = motion.create<ProductProps>(({product, className, color, ...rest}) => {
     const [opened, setOpened] = useState(false);
-    const ref = useRef<HTMLDivElement>(null);
+    const reviewRef = useRef<HTMLDivElement>(null);
+
+    const variants = {
+        "hidden": {
+            opacity: 0,
+            height: 0
+        },
+        "visible": {
+            opacity: 1,
+            height: "auto"
+        }
+    }
 
     const handleOpenReviews = () => {
         setOpened(prevState => !prevState)
@@ -18,7 +30,7 @@ export const Product: FC<ProductProps> = ({product, className, color, ...rest}) 
 
     const handleScrollReview = () => {
         setOpened(true);
-        ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        reviewRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     };
 
     return (
@@ -116,23 +128,25 @@ export const Product: FC<ProductProps> = ({product, className, color, ...rest}) 
                 </div>
             </Card>
 
-            <Card
-                color={"blue"}
-                ref={ref}
-                className={clsx(styles.reviews, {
-                    [styles.opened]: opened,
-                    [styles.closed]: !opened
-                })}
+            <motion.div
+                variants={variants}
+                initial={"hidden"}
+                animate={opened ? "visible" : "hidden"}
             >
-                {product.reviews.map((review) => (
-                    <React.Fragment key={review._id}>
-                        <Review review={review}/>
-                        <Divider/>
-                    </React.Fragment>
-                ))}
-
-                <ReviewForm productId={product._id}/>
-            </Card>
+                <Card
+                    color={"blue"}
+                    ref={reviewRef}
+                    className={styles.reviews}
+                >
+                    {product.reviews.map((review) => (
+                        <React.Fragment key={review._id}>
+                            <Review review={review}/>
+                            <Divider/>
+                        </React.Fragment>
+                    ))}
+                    <ReviewForm productId={product._id}/>
+                </Card>
+            </motion.div>
         </div>
     )
-};
+});
