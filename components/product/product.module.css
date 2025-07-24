@@ -115,6 +115,10 @@
     margin-bottom: 20px;
 }
 
+.productWrapper {
+    overflow: hidden;
+}
+
 .disadvantages {
     border-left: 2px solid var(--red);
     padding-left: 15px;

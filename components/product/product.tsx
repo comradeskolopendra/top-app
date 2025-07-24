@@ -34,7 +34,7 @@ export const Product = motion.create<ProductProps>(({product, className, color, 
     };
 
     return (
-        <div className={clsx(className)} {...rest}>
+        <div className={clsx(styles.productWrapper, className)} {...rest}>
             <Card className={clsx(styles.product)}>
                 <div className={styles.logo}>
                     <Image width={70} height={70} src={product.image} alt={product.title}/>

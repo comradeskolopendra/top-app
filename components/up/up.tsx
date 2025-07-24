@@ -3,9 +3,10 @@ import {UpProps} from "./up.props";
 import clsx from "clsx";
 import styles from "./up.module.css";
 
-import UpIcon from "./assets/up.svg";
+import UpIcon from "@/components/icon-button/assets/up.svg";
 import {useScrollY} from "@/hooks/use-scroll-y";
 import {motion, useAnimation} from "framer-motion";
+import {IconButton} from "@/components/icon-button/icon-button";
 
 export const Up: FC<UpProps> = ({className, ...rest}) => {
     const scrollY = useScrollY();
@@ -23,13 +24,16 @@ export const Up: FC<UpProps> = ({className, ...rest}) => {
     };
 
     return (
-        <motion.button
+        <motion.div
             className={clsx(styles.up, className)}
-            onClick={handleScrollTop}
             animate={controls}
             initial={{opacity: 0}}
         >
-            <UpIcon/>
-        </motion.button>
+            <IconButton
+                icon={"up"}
+                appearance={"primary"}
+                onClick={handleScrollTop}
+            />
+        </motion.div>
     )
 }
