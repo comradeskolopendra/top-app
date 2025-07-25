@@ -6,11 +6,8 @@ import {TopLevelCategory} from "@/interfaces/page.interface";
 import {SortEnum} from "@/components/sort/sort.props";
 import {sortReducer} from "@/components/top-page/sort.reducer";
 
-import {useScrollY} from "@/hooks/use-scroll-y";
-
 export const TopPage: FC<TopPageProps> = ({firstCategory, page, products}) => {
     const [{products: sortedProducts, sort}, dispatch] = useReducer(sortReducer, {sort: SortEnum.RATING, products: products});
-    const scrollY = useScrollY();
 
     const setSort = useCallback((type: SortEnum) => {
         if (type !== SortEnum.RESET) {
