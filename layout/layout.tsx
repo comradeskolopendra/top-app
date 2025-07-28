@@ -1,4 +1,4 @@
-import { FC } from "react";
+import {FC, useState, KeyboardEvent, useRef} from "react";
 import { Footer } from "./footer/footer";
 import { Header } from "./header/header";
 import { LayoutProps } from "./layout.props";
@@ -7,15 +7,42 @@ import { Sidebar } from "./sidebar/sidebar";
 import { AppContextProvider, IAppContext } from "@/context/app.context";
 import styles from "./layout.module.css";
 import {Up} from "@/components";
+import clsx from "clsx";
 
 const Layout: FC<LayoutProps> = ({ children }) => {
+    const [isDisplayed, setDisplayed] = useState(false);
+    const refContent = useRef<HTMLDivElement>(null);
+
+    const handleSkipContentAction = (event: KeyboardEvent) => {
+        const isNeeded = ["Enter", "Space"];
+
+        if (isNeeded.includes(event.code)) {
+            event.preventDefault();
+            refContent.current?.focus();
+        }
+
+        setDisplayed(false)
+    };
+
     return (
         <div className={styles.wrapper}>
+            <a
+                href={""}
+                tabIndex={1}
+                className={clsx(styles.skipLink, {
+                    [styles.displayed]: isDisplayed,
+                    [styles.hidden]: !isDisplayed
+                })}
+                onFocus={() => setDisplayed(true)}
+                onKeyDown={handleSkipContentAction}
+            >
+                К содержанию
+            </a>
             <Header className={styles.header} />
 
             <Sidebar className={styles.sidebar} />
 
-            <div className={styles.body}>
+            <div className={styles.body} tabIndex={0} ref={refContent}>
                 {children}
             </div>
 

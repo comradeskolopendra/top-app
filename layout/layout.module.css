@@ -21,10 +21,35 @@
 
 .body {
     grid-area: body;
+    outline: none;
 }
 
 .footer {
     grid-area: footer;
+}
+
+.skipLink {
+    display: block;
+
+    position: fixed;
+    left: 100px;
+    top: 0;
+
+    overflow: hidden;
+    height: 0;
+    background-color: var(--primary);
+
+    color: var(--white);
+
+    text-decoration: none;
+}
+
+.displayed {
+    height: auto;
+}
+
+.hidden {
+    height: 0;
 }
 
 @media screen and (max-width: 765px) {

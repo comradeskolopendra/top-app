@@ -1,6 +1,6 @@
 import { AppContext } from "@/context/app.context";
 import {IFirstLevelMenuItem, IPageItem} from "@/interfaces/menu.interface";
-import { FC, useContext } from "react";
+import {FC, useContext, KeyboardEvent} from "react";
 
 import {firstLevelMenu} from "@/helpers/helpers";
 
@@ -55,6 +55,14 @@ const Menu: FC = () => {
         }
     };
 
+    const handleKeyDownSecondLevel = (event: KeyboardEvent<HTMLDivElement>, secondCategory: string) => {
+        const isNeeded = ["Enter", "Space"];
+        if (isNeeded.includes(event.code)) {
+            event.preventDefault();
+            openSecondBlock(secondCategory);
+        }
+    };
+
     const buildFirstLevel = ()=> {
         return (
             <>
@@ -91,7 +99,14 @@ const Menu: FC = () => {
 
                     return (
                         <div key={menuItem._id.secondCategory}>
-                            <div className={styles.secondLevel} onClick={() => openSecondBlock(menuItem._id.secondCategory)}>{menuItem._id.secondCategory}</div>
+                            <div
+                                className={styles.secondLevel}
+                                tabIndex={0}
+                                onClick={() => openSecondBlock(menuItem._id.secondCategory)}
+                                onKeyDown={(event) => handleKeyDownSecondLevel(event, menuItem._id.secondCategory)}
+                            >
+                                {menuItem._id.secondCategory}
+                            </div>
                             <motion.div
                                 layout
                                 variants={variants}
@@ -99,7 +114,7 @@ const Menu: FC = () => {
                                 animate={menuItem.isOpened ? "visible" : "hidden"}
                                 className={clsx(styles.secondLevelBlock)}
                             >
-                                {buildThirdLevel(menuItem.pages, flMenu.route)}
+                                {buildThirdLevel(menuItem.pages, flMenu.route, menuItem.isOpened)}
                             </motion.div>
                         </div>
                     )
@@ -109,7 +124,7 @@ const Menu: FC = () => {
         )
     };
 
-    const buildThirdLevel = (pages: IPageItem[], route: string) => {
+    const buildThirdLevel = (pages: IPageItem[], route: string, isOpened: boolean | undefined) => {
         return (
                 pages.map(page => {
                     const openedItem = router.asPath.split("/")[2];
@@ -124,6 +139,7 @@ const Menu: FC = () => {
                                 className={clsx(styles.thirdLevel, {
                                     [styles.thirdLevelActive]: page.alias === openedItem
                                 })}
+                                tabIndex={!isOpened ? -1 : 0}
                             >
                                 {page.category}
                             </Link>

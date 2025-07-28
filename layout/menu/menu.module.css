@@ -56,9 +56,10 @@
 
     font-size: 14px;
     font-weight: 500;
-    line-height: 19px;
 
     text-decoration: none;
+
+    outline-offset: -1px;
 }
 
 .thirdLevelActive, .thirdLevel:hover {
