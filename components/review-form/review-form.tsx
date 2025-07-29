@@ -11,7 +11,7 @@ import {API} from "@/helpers/api";
 
 
 
-export const ReviewForm: FC<ReviewFormProps> = ({productId, className, ...rest}) => {
+export const ReviewForm: FC<ReviewFormProps> = ({productId, className, isOpened, ...rest}) => {
     const {
         register,
         control,
@@ -60,6 +60,7 @@ export const ReviewForm: FC<ReviewFormProps> = ({productId, className, ...rest})
                     )}
                     error={errors.name}
                     placeholder={"Имя"}
+                    tabIndex={isOpened ? 0 : -1}
                 />
                 <Input
                     {...register("title",
@@ -73,6 +74,7 @@ export const ReviewForm: FC<ReviewFormProps> = ({productId, className, ...rest})
                     error={errors.title}
                     placeholder={"Заголовок отзыва"}
                     className={styles.titleInput}
+                    tabIndex={isOpened ? 0 : -1}
                 />
 
 
@@ -94,6 +96,7 @@ export const ReviewForm: FC<ReviewFormProps> = ({productId, className, ...rest})
                                 setRating={field.onChange}
                                 error={errors.rating}
                                 isEditable
+                                tabIndex={isOpened ? 0 : -1}
                             />
                         )}
                     />
@@ -105,10 +108,14 @@ export const ReviewForm: FC<ReviewFormProps> = ({productId, className, ...rest})
                     error={errors.description}
                     placeholder={"Текст отзыва"}
                     className={styles.textarea}
+                    tabIndex={isOpened ? 0 : -1}
                 />
 
                 <div className={styles.submit}>
-                    <Button appearance={"primary"}>
+                    <Button
+                        appearance={"primary"}
+                        tabIndex={isOpened ? 0 : -1}
+                    >
                         Отправить
                     </Button>
 

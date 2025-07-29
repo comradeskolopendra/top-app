@@ -31,6 +31,7 @@ export const Product = motion.create<ProductProps>(({product, className, color, 
     const handleScrollReview = () => {
         setOpened(true);
         reviewRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        reviewRef.current?.focus();
     };
 
     return (
@@ -137,6 +138,7 @@ export const Product = motion.create<ProductProps>(({product, className, color, 
                     color={"blue"}
                     ref={reviewRef}
                     className={styles.reviews}
+                    tabIndex={opened ? 0 : -1}
                 >
                     {product.reviews.map((review) => (
                         <React.Fragment key={review._id}>
@@ -144,7 +146,7 @@ export const Product = motion.create<ProductProps>(({product, className, color, 
                             <Divider/>
                         </React.Fragment>
                     ))}
-                    <ReviewForm productId={product._id}/>
+                    <ReviewForm productId={product._id} isOpened={opened} />
                 </Card>
             </motion.div>
         </div>
