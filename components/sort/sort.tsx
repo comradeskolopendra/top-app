@@ -9,23 +9,23 @@ export const Sort: FC<SortProps> = ({sort, setSort}) => {
 
     return (
         <div className={styles.sort}>
-            <span
+            <button
                 onClick={() => setSort(SortEnum.RATING)}
                 className={clsx({
                     [styles.active]: sort === SortEnum.RATING
                 })}
             >
                 <SortIcon className={styles.icon} /> По рейтингу
-            </span>
+            </button>
 
-            <span
+            <button
                 onClick={() => setSort(SortEnum.PRICE)}
                 className={clsx({
                     [styles.active]: sort === SortEnum.PRICE
                 })}
             >
                 <SortIcon className={styles.icon} /> По цене
-            </span>
+            </button>
         </div>
     )
 };
