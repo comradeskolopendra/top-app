@@ -1,4 +1,4 @@
-import {ChangeEvent, KeyboardEvent, FC, useState} from "react";
+import {ChangeEvent, KeyboardEvent, FC, useState, FormEvent} from "react";
 import {SearchProps} from "./search.props";
 import clsx from "clsx";
 import styles from "./search.module.css";
@@ -15,7 +15,8 @@ export const Search: FC<SearchProps> = ({className, ...rest}) => {
         setSearch(event.target.value);
     };
 
-    const handleSearch = () => {
+    const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         router.push({
             pathname: "/search",
             query: {
@@ -26,12 +27,17 @@ export const Search: FC<SearchProps> = ({className, ...rest}) => {
 
     const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
         if (event.key.toLowerCase() === "enter") {
-            handleSearch();
+            router.push({
+                pathname: "/search",
+                query: {
+                    q: search
+                }
+            })
         }
     }
 
     return (
-        <div className={clsx(styles.search, className)} {...rest}>
+        <form className={clsx(styles.search, className)} {...rest} role={"search"} onSubmit={handleSearch}>
             <Input
                 placeholder={"Поиск"}
                 value={search}
@@ -42,12 +48,12 @@ export const Search: FC<SearchProps> = ({className, ...rest}) => {
             <Button
                 appearance={"primary"}
                 className={styles.button}
-                onClick={handleSearch}
+                type={"submit"}
                 onKeyDown={handleKeyDown}
                 aria-label={"Искать по сайту"}
             >
                 <SearchIcon/>
             </Button>
-        </div>
+        </form>
     )
 }
