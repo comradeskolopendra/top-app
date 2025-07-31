@@ -33,7 +33,7 @@ export const Search: FC<SearchProps> = ({className, ...rest}) => {
     return (
         <div className={clsx(styles.search, className)} {...rest}>
             <Input
-                placeholder={"Поиск..."}
+                placeholder={"Поиск"}
                 value={search}
                 onChange={handleChangeSearch}
                 className={styles.input}
@@ -44,6 +44,7 @@ export const Search: FC<SearchProps> = ({className, ...rest}) => {
                 className={styles.button}
                 onClick={handleSearch}
                 onKeyDown={handleKeyDown}
+                aria-label={"Искать по сайту"}
             >
                 <SearchIcon/>
             </Button>

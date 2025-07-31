@@ -23,7 +23,7 @@ export const TopPage: FC<TopPageProps> = ({firstCategory, page, products}) => {
         <div className={styles.page}>
             <header className={styles.header}>
                 <Htag tag={"h1"}>{page.title}</Htag>
-                <Tag size="m" color="grey">{products && products.length}</Tag>
+                <Tag size="m" aria-label={`Количество курсов ${products.length}`} color="grey">{products && products.length}</Tag>
 
                 <Sort sort={sort} setSort={setSort}/>
             </header>

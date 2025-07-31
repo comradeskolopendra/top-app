@@ -46,15 +46,29 @@ export const Product = motion.create<ProductProps>(({product, className, color, 
                 </div>
 
                 <div className={styles.price}>
-                    {formatCurrency(product.price)}
-                    {product.oldPrice && <Tag className={styles.oldPrice} color={"green"}>{formatCurrency(product.price - product.oldPrice)}</Tag>}
+                    <span>
+                        <span className={"visuallyHidden"}>Цена</span>
+                        {formatCurrency(product.price)}
+                    </span>
+                    <span>
+                        {product.oldPrice &&
+                            <Tag className={styles.oldPrice} color={"green"}>
+                                <span className={"visuallyHidden"}>Скидка</span>
+                                {formatCurrency(product.price - product.oldPrice)}
+                            </Tag>
+                        }
+                    </span>
                 </div>
 
                 <div className={styles.credit}>
-                    {formatCurrency(product.credit)} / <span className={styles.month}>мес</span>
+                    <span>
+                        <span className={"visuallyHidden"}>Кредит</span>
+                        {formatCurrency(product.credit)} / <span className={styles.month}>мес</span>
+                    </span>
                 </div>
 
                 <div className={styles.rating}>
+                    <span className={"visuallyHidden"}>Рейтинг {product.reviewAvg || product.initialRating}</span>
                     <Rating rating={product.reviewAvg  || product.initialRating} />
                 </div>
 
@@ -64,11 +78,11 @@ export const Product = motion.create<ProductProps>(({product, className, color, 
                     ))}
                 </div>
 
-                <div className={styles.priceTitle}>
+                <div className={styles.priceTitle} aria-hidden={true}>
                     Цена
                 </div>
 
-                <div className={styles.creditTitle}>
+                <div className={styles.creditTitle} aria-hidden={true}>
                     Кредит
                 </div>
 
