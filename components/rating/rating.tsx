@@ -157,12 +157,12 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(({ isEditable = fa
                     ref={r => {
                         ratingArrayRef.current?.push(r)
                     }}
-                    role={isEditable ? 'slider' : ''}
-                    aria-invalid={error ? true : false}
-                    aria-valuenow={rating}
-                    aria-valuemax={5}
-                    aria-label={isEditable ? 'Укажите рейтинг' : ('рейтинг' + rating)}
+                    role={isEditable ? "slider" : ""}
+                    aria-label={isEditable ? "Укажите рейтинг" : `Рейтинг ${rating}`}
                     aria-valuemin={1}
+                    aria-valuemax={5}
+                    aria-valuenow={rating}
+                    aria-invalid={!!error}
                 >
 					<StarIcon />
 				</span>
@@ -211,7 +211,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(({ isEditable = fa
             [styles.error]: error
         })}>
             {ratingArray.map((r, i) => (<span key={i}>{r}</span>))}
-            {error && <span role="alert" className={styles.errorMessage}>{error.message}</span>}
+            {error && <span role={"alert"} className={styles.errorMessage}>{error.message}</span>}
         </div>
     );
 });

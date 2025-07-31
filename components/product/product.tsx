@@ -137,6 +137,7 @@ export const Product = motion.create<ProductProps>(({product, className, color, 
                         onClick={handleOpenReviews}
                         appearance={"ghost"}
                         arrow={opened ? "down" : "right"}
+                        aria-expanded={opened}
                     >
                         Читать отзывы
                     </Button>

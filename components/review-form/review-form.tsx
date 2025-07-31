@@ -19,7 +19,8 @@ export const ReviewForm: FC<ReviewFormProps> = ({productId, className, isOpened,
         formState: {
             errors
         },
-        reset
+        reset,
+        clearErrors
     } = useForm<IReviewForm>()
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [error, setError] = useState<string>();
@@ -61,6 +62,7 @@ export const ReviewForm: FC<ReviewFormProps> = ({productId, className, isOpened,
                     error={errors.name}
                     placeholder={"Имя"}
                     tabIndex={isOpened ? 0 : -1}
+                    aria-invalid={!!errors.name}
                 />
                 <Input
                     {...register("title",
@@ -75,6 +77,7 @@ export const ReviewForm: FC<ReviewFormProps> = ({productId, className, isOpened,
                     placeholder={"Заголовок отзыва"}
                     className={styles.titleInput}
                     tabIndex={isOpened ? 0 : -1}
+                    aria-invalid={!!errors.title}
                 />
 
 
@@ -109,12 +112,15 @@ export const ReviewForm: FC<ReviewFormProps> = ({productId, className, isOpened,
                     placeholder={"Текст отзыва"}
                     className={styles.textarea}
                     tabIndex={isOpened ? 0 : -1}
+                    aria-label={"Текст отзыва"}
+                    aria-invalid={!!errors.description}
                 />
 
                 <div className={styles.submit}>
                     <Button
                         appearance={"primary"}
                         tabIndex={isOpened ? 0 : -1}
+                        onClick={() => clearErrors()}
                     >
                         Отправить
                     </Button>
