@@ -130,20 +130,34 @@ export const ReviewForm: FC<ReviewFormProps> = ({productId, className, isOpened,
             </div>
 
             {isSuccess && (
-                <div className={clsx(styles.success, styles.panel)}>
+                <div className={clsx(styles.success, styles.panel)} role={"alert"}>
                     <div className={styles.successTitle}>Ваш отзыв отправлен</div>
                     <div>Спасибо, ваш отзыв будет опубликован после проверки</div>
 
-                    <CloseSuccess className={styles.close} onClick={() => setIsSuccess(false)}/>
+                    <button
+                        className={clsx(styles.close)}
+                        onClick={() => setIsSuccess(false)}
+                        aria-label={"Закрыть оповещение"}
+                        tabIndex={isSuccess ? 0 : -1}
+                    >
+                        <CloseSuccess/>
+                    </button>
                 </div>
             )}
             {error && (
-                <div className={clsx(styles.error, styles.panel)}>
+                <div className={clsx(styles.error, styles.panel)} role={"alert"}>
                     <div className={styles.errorTitle}>
                         Что-то пошло не так
                     </div>
 
-                    <CloseSuccess className={clsx(styles.close)} onClick={() => setError("")}/>
+                    <button
+                        className={clsx(styles.close)}
+                        onClick={() => setError("")}
+                        aria-label={"Закрыть оповещение"}
+                        tabIndex={error ? 0 : -1}
+                    >
+                        <CloseSuccess/>
+                    </button>
                 </div>
             )}
         </form>
