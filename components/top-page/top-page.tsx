@@ -28,9 +28,9 @@ export const TopPage: FC<TopPageProps> = ({firstCategory, page, products}) => {
                 <Sort sort={sort} setSort={setSort}/>
             </header>
 
-            <div>
+            <div role={"list"}>
                 {sortedProducts && sortedProducts.map((product => (
-                    <Product layout key={product._id} product={product}/>
+                    <Product layout key={product._id} product={product} role={"listitem"} />
                 )))}
             </div>
 

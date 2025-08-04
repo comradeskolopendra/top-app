@@ -1,6 +1,6 @@
 import { AppContext } from "@/context/app.context";
 import {IFirstLevelMenuItem, IPageItem} from "@/interfaces/menu.interface";
-import {FC, useContext, KeyboardEvent} from "react";
+import {FC, useContext, KeyboardEvent, useState} from "react";
 
 import {firstLevelMenu} from "@/helpers/helpers";
 
@@ -16,6 +16,7 @@ import {motion} from "framer-motion";
 
 const Menu: FC = () => {
     const {menu, setMenu, firstCategory} = useContext(AppContext);
+    const [announce, setAnnounce] = useState<"closed" | "opened" | undefined>();
     const router = useRouter();
 
     const variants = {
@@ -47,6 +48,7 @@ const Menu: FC = () => {
         if (setMenu) {
             setMenu(menu.map(element => {
                 if (element._id.secondCategory === secondCategory) {
+                    setAnnounce(element.isOpened ? "closed" : "opened");
                     element.isOpened = !element.isOpened;
                 }
 
@@ -55,7 +57,7 @@ const Menu: FC = () => {
         }
     };
 
-    const handleKeyDownSecondLevel = (event: KeyboardEvent<HTMLDivElement>, secondCategory: string) => {
+    const handleKeyDownSecondLevel = (event: KeyboardEvent<HTMLButtonElement>, secondCategory: string) => {
         const isNeeded = ["Enter", "Space"];
         if (isNeeded.includes(event.code)) {
             event.preventDefault();
@@ -65,10 +67,10 @@ const Menu: FC = () => {
 
     const buildFirstLevel = ()=> {
         return (
-            <>
+            <ul className={styles.firstLevelList}>
                 {firstLevelMenu.map(flMenu => {
                     return (
-                        <div key={flMenu.route}>
+                        <li key={flMenu.route} aria-expanded={flMenu.id === firstCategory}>
                             <Link className={styles.firstLevelLink} href={`/${flMenu.route}`}>
                                 <div className={clsx(styles.firstLevel, {
                                     [styles.firstLevelActive]: flMenu.id === firstCategory
@@ -79,16 +81,16 @@ const Menu: FC = () => {
                             </Link>
 
                             {flMenu.id === firstCategory && buildSecondLevel(flMenu)}
-                        </div>
+                        </li>
                     )
                 })}
-            </>
+            </ul>
         )
     };
 
     const buildSecondLevel = (flMenu: IFirstLevelMenuItem) => {
         return (
-            <div className={styles.secondBlock}>
+            <ul className={styles.secondBlock}>
                 {menu.map((menuItem) => {
                     const aliases = menuItem.pages.map((page) => page.alias);
                     const openedItem = router.asPath.split("/")[2];
@@ -98,16 +100,16 @@ const Menu: FC = () => {
                     }
 
                     return (
-                        <div key={menuItem._id.secondCategory}>
-                            <div
+                        <li key={menuItem._id.secondCategory}>
+                            <button
                                 className={styles.secondLevel}
-                                tabIndex={0}
                                 onClick={() => openSecondBlock(menuItem._id.secondCategory)}
                                 onKeyDown={(event) => handleKeyDownSecondLevel(event, menuItem._id.secondCategory)}
+                                aria-expanded={menuItem.isOpened}
                             >
                                 {menuItem._id.secondCategory}
-                            </div>
-                            <motion.div
+                            </button>
+                            <motion.ul
                                 layout
                                 variants={variants}
                                 initial={menuItem.isOpened ? "visible" : "hidden"}
@@ -115,12 +117,12 @@ const Menu: FC = () => {
                                 className={clsx(styles.secondLevelBlock)}
                             >
                                 {buildThirdLevel(menuItem.pages, flMenu.route, menuItem.isOpened)}
-                            </motion.div>
-                        </div>
+                            </motion.ul>
+                        </li>
                     )
                 })
                 }
-            </div>
+            </ul>
         )
     };
 
@@ -130,7 +132,7 @@ const Menu: FC = () => {
                     const openedItem = router.asPath.split("/")[2];
 
                     return (
-                        <motion.div
+                        <motion.li
                             variants={variantsThirdLevel}
                             key={page._id}
                         >
@@ -140,10 +142,11 @@ const Menu: FC = () => {
                                     [styles.thirdLevelActive]: page.alias === openedItem
                                 })}
                                 tabIndex={!isOpened ? -1 : 0}
+                                aria-current={page.alias === openedItem ? "page" : false}
                             >
                                 {page.category}
                             </Link>
-                        </motion.div>
+                        </motion.li>
                     )
                 })
         )
@@ -151,6 +154,7 @@ const Menu: FC = () => {
 
     return (
         <nav className={styles.menu} role={"navigation"}>
+            {announce && <span className={"visuallyHidden"} role={"log"}>{announce === "opened" ? "Развернуто" : "Свернуто"}</span>}
             {buildFirstLevel()}
         </nav>
     )

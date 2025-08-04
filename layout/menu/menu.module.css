@@ -12,6 +12,11 @@
     margin-top: 20px;
 }
 
+.firstLevelList {
+    padding: 0;
+    list-style: none;
+}
+
 
 .firstLevelLink {
     text-decoration: none;
@@ -33,16 +38,26 @@
     font-size: 12px;
     font-weight: 300;
     line-height: 16px;
+
+    background: none;
+    border: none;
+
+    font-family: inherit;
+    padding: 0;
 }
 
 .secondLevelBlock {
     overflow: hidden;
+
+    padding: 0;
+    list-style: none;
 }
 
 .secondBlock {
-    margin-left: 12px;
-    padding-left: 32px;
-    margin-top: 15px;
+    list-style: none;
+
+    padding: 0 0 0 32px;
+    margin: 15px 0 0 12px;
 
     border-left: 1px solid #dfdfdf;
 }
