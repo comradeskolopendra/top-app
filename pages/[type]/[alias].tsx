@@ -13,6 +13,7 @@ import Head from "next/head";
 
 const TopPage: FC<TopPageProps> = ({ page, products, firstCategory }) => {
     return (
+        page && products &&
         <>
             <Head>
                 <title>{page.metaTitle}</title>
@@ -42,7 +43,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     return {
         paths: paths,
-        fallback: true
+        fallback: false
     }
 };
 

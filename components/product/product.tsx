@@ -9,7 +9,7 @@ import React from "react";
 import Image from "next/image";
 import {motion, useAnimation} from "framer-motion";
 
-export const Product = motion.create<ProductProps>(({product, className, color, ...rest}) => {
+export const Product = motion.create(({product, className, color, ...rest}: ProductProps) => {
     const [opened, setOpened] = useState(false);
     const reviewRef = useRef<HTMLDivElement>(null);
 
@@ -38,7 +38,7 @@ export const Product = motion.create<ProductProps>(({product, className, color, 
         <div className={clsx(styles.productWrapper, className)} {...rest}>
             <Card className={clsx(styles.product)}>
                 <div className={styles.logo}>
-                    <Image width={70} height={70} src={product.image} alt={product.title}/>
+                    <img width={70} height={70} src={product.image} alt={product.title}/>
                 </div>
 
                 <div className={styles.title}>

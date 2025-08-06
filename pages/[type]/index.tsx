@@ -25,7 +25,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     return {
         paths: firstLevelMenu.map((element) => `/${element.route}`),
-        fallback: true
+        fallback: false
     }
 };
 
