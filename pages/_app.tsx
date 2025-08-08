@@ -21,9 +21,8 @@ export default function App({ Component, pageProps, router }: AppProps) {
         <meta property={"og:url"} content={`${process.env.NEXT_PUBLIC_DOMAIN}${router.asPath}`} />
         <meta property={"og:locale"} content={"ru_RU"}/>
 
-        <link rel="preconnect" href="https://fonts.googleapis.com"/>
         <link rel="preconnect" href="https://mc.yandex.ru"/>
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
+
       </Head>
 
       <YMInitializer

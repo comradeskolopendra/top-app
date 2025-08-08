@@ -5,7 +5,7 @@ import axios from "axios";
 import { GetStaticProps } from "next";
 import { FC, useState } from "react";
 import {API} from "@/helpers/api";
-
+import Error from "next/error";
 
 const Home: FC<HomeProps> = ({ menu, firstCategory }) => {
   const [rating, setRating] = useState(4);

@@ -10,10 +10,14 @@ import {firstLevelMenu} from "@/helpers/helpers";
 import {TopPage as TopPageComponent} from "@/components";
 import {API} from "@/helpers/api";
 import Head from "next/head";
+import {Error404} from "@/pages/404";
 
 const TopPage: FC<TopPageProps> = ({ page, products, firstCategory }) => {
+    if (!page || !products) {
+        return <Error404/>
+    };
+
     return (
-        page && products &&
         <>
             <Head>
                 <title>{page.metaTitle}</title>
