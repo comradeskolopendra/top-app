@@ -33,6 +33,7 @@ export const Up: FC<UpProps> = ({className, ...rest}) => {
         >
             <IconButton
                 icon={"up"}
+                aria-label={"Прокрутить наверх"}
                 appearance={"primary"}
                 onClick={handleScrollTop}
             />

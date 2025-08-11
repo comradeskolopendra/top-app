@@ -28,7 +28,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         <div className={styles.wrapper}>
             <a
                 href={""}
-                tabIndex={1}
+                tabIndex={0}
                 className={clsx(styles.skipLink, {
                     [styles.displayed]: isDisplayed,
                     [styles.hidden]: !isDisplayed
