@@ -1,4 +1,4 @@
-FROM node:14-apline
+FROM node
 WORKDIR ../docker
 
 ADD package.json package.json

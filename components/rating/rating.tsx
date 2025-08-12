@@ -112,7 +112,7 @@
 
 // этот код не смотреть. не мой код.
 import { RatingProps } from './rating.props';
-import styles from './Rating.module.css';
+import styles from './rating.module.css';
 import clsx from 'clsx';
 import StarIcon from './assets/star.svg';
 import {useEffect, useState, KeyboardEvent, forwardRef, ForwardedRef, useRef, ReactNode} from 'react';
